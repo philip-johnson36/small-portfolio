@@ -1,0 +1,35 @@
+<script>
+function receiveWs(msg){
+    
+    var data = JSON.parse(msg.data);
+    
+    if (data.valve){
+        var valves = JSON.parse(data.valve);
+        for(var i = 0; i < valves.length; i++){
+            console.log("in the for loop")
+            if(open[i] != parseInt(valves[i])){
+                if(parseInt(valves[i])){
+                    openValve(i);
+                }
+                else {
+                    closeValve(i);
+                }
+                console.log(i);
+            }
+        }
+    } else if (data.state==1){
+        testDone();
+    }
+    else if (data.state==2){
+        filterDone();
+    }
+    else if (data.air){
+        if(open[2]){
+            closeValve(2);
+        }
+        else{
+            openValve(2);
+        }
+    }
+}
+</script>
